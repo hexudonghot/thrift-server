@@ -10,7 +10,8 @@ import org.springframework.stereotype.Service;
 @Service("helloService")
 public class HelloServiceImpl implements HelloService.Iface {
     @Override
-    public String greet(String para) throws TException {
+    public String greet(String para)
+    {
         return String.format("Hello %s!", para);
     }
 }

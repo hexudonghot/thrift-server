@@ -20,8 +20,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
-
-        try {
+        try
+        {
             TProcessor tprocessor = new HelloService.Processor<>(new HelloServiceImpl());
             TServerSocket serverTransport = new TServerSocket(9898);
             TServer.Args tArgs = new TServer.Args(serverTransport);
@@ -30,7 +30,8 @@ public class Application {
             TServer server = new TSimpleServer(tArgs);
             server.serve();
             log.info("服务端开启....");
-        } catch (TTransportException e) {
+        } catch (TTransportException e)
+        {
             log.error("服务端开启异常.", e);
         }
     }
