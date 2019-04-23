@@ -1,15 +1,15 @@
 package com.example.service;
 
+import com.asiainno.uplive.thrift.service.ProfileTService;
 import com.example.AbstractTest;
-import com.example.thrift.api.HelloService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.thrift.TException;
 import org.apache.thrift.protocol.TBinaryProtocol;
+import org.apache.thrift.protocol.TMultiplexedProtocol;
 import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 import org.junit.Test;
-
 /**
  * Created by henry on 2018/7/23.
  */
@@ -31,17 +31,14 @@ public class HelloServiceTest extends AbstractTest
 //    }
 
     @Test
-    public void testRemote()
+    public void testRemote() throws TException
     {
-        try (TTransport transport = new TSocket("52.74.130.30", 9080, 30000))
-        {
-            TProtocol protocol = new TBinaryProtocol(transport);
-            HelloService.Client helloService = new HelloService.Client(protocol);
-            transport.open();
-            log.info("远程调用服务...{}", helloService.greet("Remote"));
-        } catch (TException e)
-        {
-            log.error("远程调用异常.", e);
-        }
+        TTransport transport = new TSocket("52.74.130.30", 9080,30000);
+        TProtocol protocol = new TBinaryProtocol(transport);
+        TMultiplexedProtocol mp1 = new TMultiplexedProtocol(protocol, "ProfileTService");
+        ProfileTService.Client client = new ProfileTService.Client(mp1);
+        transport.open();
+        System.out.println(client.isContainEmailRegisterWhiteItem("qq.com"));
     }
+
 }
