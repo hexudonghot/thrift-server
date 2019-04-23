@@ -9,7 +9,6 @@ import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Created by henry on 2018/7/23.
@@ -17,24 +16,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Slf4j
 public class HelloServiceTest extends AbstractTest
 {
-    @Autowired
-    private HelloService.Iface helloService;
-    @Test
-    public void testLocal()
-    {
-        try
-        {
-            log.info("本地调用服务...{}", helloService.greet("Local"));
-        } catch (TException e)
-        {
-            log.error("本地调用异常.", e);
-        }
-    }
+//    @Autowired
+//    private HelloService.Iface helloService;
+//    @Test
+//    public void testLocal()
+//    {
+//        try
+//        {
+//            log.info("本地调用服务...{}", helloService.greet("Local"));
+//        } catch (TException e)
+//        {
+//            log.error("本地调用异常.", e);
+//        }
+//    }
 
     @Test
     public void testRemote()
     {
-        try (TTransport transport = new TSocket("localhost", 9898, 30000))
+        try (TTransport transport = new TSocket("52.74.130.30", 9080, 30000))
         {
             TProtocol protocol = new TBinaryProtocol(transport);
             HelloService.Client helloService = new HelloService.Client(protocol);
