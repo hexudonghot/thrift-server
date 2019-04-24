@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.asiainno.uplive.crm.thrift.service.CrmService;
 import com.asiainno.uplive.thrift.service.ProfileTService;
 import com.example.AbstractTest;
 import com.example.thrift.api.HelloService;
@@ -34,7 +35,7 @@ public class HelloServiceTest extends AbstractTest
     }
 
     @Test
-    public void testRemote() throws TException
+    public void ProfileTService() throws TException
     {
         TTransport transport = new TSocket("52.74.130.30", 9080,30000);
         TProtocol protocol = new TBinaryProtocol(transport);
@@ -43,5 +44,17 @@ public class HelloServiceTest extends AbstractTest
         transport.open();
         System.out.println(client.isContainEmailRegisterWhiteItem("qq.com"));
     }
+
+    @Test
+    public void msgSend() throws TException
+    {
+        TTransport transport = new TSocket("52.74.130.30", 19106,30000);
+        TProtocol protocol = new TBinaryProtocol(transport);
+        TMultiplexedProtocol mp1 = new TMultiplexedProtocol(protocol, "CrmService");
+        CrmService.Client client = new CrmService.Client(mp1);
+        transport.open();
+        client.sendMsgWithFeature(0,"{\"sid\":1000000,\"rids\":\"[\\\"321\\\"]\",\"msgType\":501,\"deviceType\":0,\"pushMsg\":\"\",\"content\":\"{}\",\"countryCode\":\"CN\",\"language\":\"\",\"flag\":\"1\",\"startDate\":-62170012800}");
+    }
+
 
 }
